@@ -1,0 +1,235 @@
+/*
+DataFrame.cpp
+	This class implements the functions from the DataFrame's header.
+
+	Created on: 1/22/2018
+	Author: Tony Nguyen
+	Version: 1.1
+*/
+template <class DT>
+#include <iostream>
+#include "DataFrame.h"
+using namespace std;
+
+/*
+Default constructor that doesn't create a matrix of rows and columns because of no specified row or column.
+*/
+DataFrame<class DT>::DataFrame()
+{
+	dataRows = NULL;
+	noRows = 0;
+	noCols = 0;
+	colNames = NULL;
+}
+
+/*
+Overloaded constructor that takes in a row and column and creates the empty matrix.
+	@param int rows Is the value used to construct the number of rows in table.
+	@param int cols Is the value used to construct the number of columns in table.
+*/
+DataFrame<DT>::DataFrame(int rows, int cols)
+{
+	noRows = rows;
+	noCols = cols;
+	colNames = new char*[noCols];
+	// Initializing and creating the table of rows and columns.
+	dataRows = new DT*[noRows];
+	for (int i = 0; i < noRows; i++)
+	{
+		// For every row create a column using column length.
+		dataRows[i] = new DT[noCols];
+		for (int j = 0; j < noCols; j++)
+		{
+			// Set column names to be null initially.
+			colNames[j] = NULL;
+			// Setting the table to hold zeros initially.
+			table[i][j] = 0;
+		}
+	}
+}
+
+/*
+This method displays the output from the matrix. This also displays all the row and column names.
+*/
+void DataFrame<DT>::display()
+{
+	// Display the column names.
+	for (int i = 0; i < noCols; i++)
+	{
+		// In case column names is not set then print commas.
+		if (colNames[i] == NULL)
+		{
+			if (i != noCols - 1)
+			{
+				cout << ",";
+			}
+			else
+			{
+				cout << endl;
+			}
+		}
+		// For formatting.
+		else if (i != noCols - 1)
+		{
+			cout << colNames[i] << ",";
+		}
+		else
+		{
+			cout << colNames[i] << endl;
+		}
+	}
+
+	// Display the row names.
+	for (int i = 0; i < noRows; i++)
+	{
+		// If case row names is not set then just print commas.
+		if (rowNames[i] == NULL)
+		{
+			if (i != noRows - 1)
+			{
+				cout << ",";
+			}
+			else
+			{
+				cout << endl;
+			}
+		}
+		// For formatting.
+		else if (i != noRows - 1)
+		{
+			cout << rowNames[i] << ",";
+		}
+		else
+		{
+			cout << rowNames[i] << endl;
+		}
+	}
+
+	// Going through each element in the matrix and outputting it.
+	for (int i = 0; i < noRows; i++)
+	{
+		for (int j = 0; j < noCols; j++)
+		{
+			cout << table[i][j] << " ";
+		}
+		printf("\n");
+	}
+}
+
+/*
+This method sets the column name by adding it to the colNames array.
+	@param int col Is the column number to set to.
+	@param const char* name Is the name we want to set to a particular cell.
+This works.
+*/
+void DataFrame<DT>::setColName(int col, const char* name)
+{
+	// Adding name into constant nameHolder.
+	const char *nameHolder = name;
+
+	// Counting the size of name. It counts \0 also.
+	int length = 0;
+	while (*nameHolder++ != '\0')
+	{
+		length++;
+	}
+
+	// Creating a pointer array to copy name to.
+	char *colHolder = new char[length];
+	for (int i = 0; i < length; i++)
+	{
+		colHolder[i] = name[i];
+	}
+	// Adding a null character at the end of name.
+	colHolder[length] = '\0';
+
+	// Adding name to certain spot in colNames.
+	colNames[col] = colHolder;
+}
+
+/*
+This method gets the ith row.
+	@param int i Passing value from the user.
+	@return int* table[i] An address with access to integer values.
+*/
+DT& DataFrame<DT>::operator[] (int i)
+{
+	return &dataRows[i];
+}
+
+/*
+Returns the column name.
+	@returns colNames The names entered in for columns.
+*/
+char** DataFrame<DT>::getColNames()
+{
+	return colNames;
+}
+
+/*
+Returns the row number.
+	@returns noRows The number of rows in table.
+*/
+int DataFrame<DT>::getNumberRows()
+{
+	return noRows;
+}
+
+/*
+Making the rows with the number of rows in maxtrix.
+	@param int* rows Is the row number being requested.
+	@param int rLen Is the number of rows in table.
+	@return tempRow Is the object that will display rows created.
+*/
+DataFrame<DT> DataFrame::getRows(int* rows, int rLen)
+{
+	// Create a new DataFrame to return of rows.
+	DataFrame<DT> tempRow = new DataFrame<DT>(rLen, noCols);
+
+	for (int i = 0; i < rLen; i++)
+	{
+		// Setting row names into tempRow and size may change.
+		(*tempRow).setRowName(i, rowNames[rows[i]]);
+
+		for (int j = 0; j < noCols; j++)
+		{
+			// Setting column names into tempRow.
+			(*tempRow).setColName(j, colNames[j]);
+			// Populating the table.
+			(*tempRow)[i][j] = table[rows[i]][j];
+		}
+	}
+
+	return tempRow;
+}
+
+/*
+Deconstructor deletes the data rows and column names once the program stops to free up memory.
+This works for now.
+*/
+DataFrame<DT>::~DataFrame()
+{
+	// If table exist then delete it.
+	if (dataRows != NULL)
+	{
+		// Delete the table. This functions fine.
+		for (int i = 0; i < noRows; i++)
+		{
+			delete[] dataRows[i];
+		}
+		delete[] dataRows;
+
+		// If colNames exist then delete it.
+		if (colNames != NULL)
+		{
+			for (int i = 0; i < noCols; i++)
+			{
+				delete[] colNames[i];
+			}
+			delete[] colNames;
+		}
+		// Setting row and column to 0.
+		noRows = 0;
+		noCols = 0;
+	}
+}
