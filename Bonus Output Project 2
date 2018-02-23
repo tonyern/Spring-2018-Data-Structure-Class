@@ -1,0 +1,13 @@
+/*// Extra Points 10 points for overloaded = operator for RowObject - uncomment to test
+	newRow = new RowObject((*DBT).getNumberRows(),2016,"Stroke","Arizona",400, 68.1);
+	
+	RowObject anotherOne;anotherOne = newRow;
+	cout << anotherOne;
+	delete newRow; 
+	
+	// Extra Points 10 points for overloaded = operator for DataFrame - uncomment to test
+	DataFrame<RowObject> newDF;
+	newDF = (*DBT);
+	newDF.display(10);
+	delete DBT;
+	*/
