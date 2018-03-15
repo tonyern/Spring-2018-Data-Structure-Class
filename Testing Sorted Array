@@ -1,0 +1,4 @@
+cout << "Min: " << temp.getMin() << endl;
+			cout << "Max: " << temp.getMax() << endl;
+			cout << "Size: " << temp.getSize() << endl;
+			cout << "Num Items: " << temp.getNumberOfItems() << endl;
