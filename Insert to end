@@ -1,0 +1,20 @@
+// Copies over backwards.
+		int k = size - 1;
+		for (int i = 0; i < size; i++)
+		{
+			newPaObject[i] = paObject[k];
+			k--;
+		}
+
+		for (int i = 0; i < size; i++)
+		{
+			if (i != sizeCounter)
+			{
+				newPaObject[i] = paObject[i];
+			}
+			else
+			{
+				newPaObject[i] = newElement;
+				position = i;
+			}
+		}
