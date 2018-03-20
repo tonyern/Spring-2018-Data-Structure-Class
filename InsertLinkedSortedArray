@@ -1,0 +1,45 @@
+/*// Making sure nameIT is not empty.
+	if (nameIT.empty())
+	{
+		return -1;
+	}
+
+	int i = 0;
+	for (auto iter = nameIT.begin(); iter != nameIT.end(); iter++, i++)
+	{
+		SortedArray<DT>& temp = *iter;
+		
+		// Check if number exists in the node we are current on. If so then return index location.
+		int indexFind = temp.find(newOne);
+		if (indexFind != -1)
+		{
+			return indexFind;
+		}
+
+		// Insert newOne into list.
+		int result = temp.insert(newOne);
+
+		//int numberOfItems = 0;
+		// Check if we can join two arrays starting with the outer most and to inner.
+		//for (int j = 0; j < iter->getSize(); j++)
+		//{
+		//	numberOfItems++;
+		//	iter2->paObject[numberOfItems] = iter->paObject[j];
+		//	iter->sizeCounter--;
+		//}
+		//nameIT.erase(iter2);
+
+		// Display node and index located we just inserted into.
+		if (result != -1)
+		{
+			cout << i << " " << result << endl;
+		}
+		// If the element doesn't exist in list and there is no space then we have to split the array.
+		else if (result == -1)
+		{
+			SortedArray<DT>& splitTemp = temp.split(ArraySizeFactor / 2);
+			nameIT.push_back(splitTemp);
+			// Increase length because we created a new node.
+			length++;
+		}
+	}*/
