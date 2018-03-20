@@ -1,0 +1,69 @@
+SortedArray<DT>* temp = new SortedArray<DT>(ArraySizeFactor);
+	int position = 0;
+
+	// Check to make sure nameIT is not empty.
+	if (nameIT.empty())
+	{
+		return -1;
+	}
+	if (nameIT.size() <= 0)
+	{
+		(*temp).insert(newOne);
+		nameIT.push_back(*temp);
+		delete temp;
+		cout << 0 << " " << 0 << endl;
+		return 0;
+	}
+	else
+	{
+		delete temp;
+
+		auto iter = nameIT.begin();
+		auto iter2 = nameIT.begin();
+
+		for (; position < nameIT.size(); position++)
+		{
+			if (position != 0)
+			{
+				iter2++;
+			}
+			if (position > 1)
+			{
+				iter++;
+			}
+			if ((*iter2).find(newOne) != -1)
+			{
+				cout << position << " " << (*iter2).find(newOne) << endl;
+				return position;
+			}
+			else if ((*iter)[(*iter).getMax()] < newOne && (*iter)[0] > newOne)
+			{
+				break;
+			}
+			else if ((*iter2)[(*iter2).getMax()] > newOne)
+			{
+				position++;
+				break;
+			}
+		}
+	}
+
+	iter = nameIT.begin();
+	position--;
+	if (position != 0)
+	{
+		advance(iter, position);
+	}
+	if ((*iter).getMax() < (ArraySizeFactor - 1))
+	{
+		cout << position << " " << (*iter).insert(newOne) << endl;
+		return position;
+	}
+	else
+	{
+		temp = (*iter).split(newOne, position);
+		iter++;
+		nameIT.insert(iter, *temp);
+		return 1;
+	}
+	return -1;
