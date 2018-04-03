@@ -1,0 +1,32 @@
+/*// If node we are looking at has a next level.
+	ttree* newLevel;
+	/if ((*_tnodes)[keyIndex]. != NULL)
+	{
+		// Insert into the next level.
+		(*_tnodes).getLevel()->insert(key);
+	}
+	// Otherwise no next level.
+	else
+	{
+		// Attempt to insert but if false then it means pre > depth.
+		if ((*_tnodes).insert(key, _currentDepth) == false)
+		{
+			// Put into _words if at max depth.
+			if ((_currentDepth + 1) > _maxDepth)
+			{
+				(*_tnodes).put(key);
+			}
+			// We need a new level.
+			else
+			{
+				newLevel = new ttree(_maxDepth, _currentDepth + 1);
+				list<string> oldWords = (*(*_tnodes).getWords());
+
+				// TODO Recursively copy words over.
+
+				newLevel->insert(key);
+				(*_tnodes).setLevel(newLevel);
+				(*_tnodes).setWords(NULL);
+			}
+		}
+	}*/
